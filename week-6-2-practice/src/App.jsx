@@ -2,25 +2,24 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function App(){
-  const [todos,setTodos] = useState([]);
-
-  useEffect(()=>{
-    axios.get("https://sum-server.100xdevs.com/todos")
-    .then(function(response){
-      setTodos(response.data.todos)
-    })
-  },[]);
-  
-  return (
-    <>
-      {todos.map(todo => <Todo title={todo.title} description={todo.description} />)}
-    </>
-  )
+  return <div>
+    <Todo id={5}/>
+  </div>
 }
 
-function Todo({title,description}){
+function Todo({id}){
+  const [todo,setTodo] = useState({});
+
+  useEffect(()=>{
+    axios.get("https://sum-server.100xdevs.com/todo?id=" + id)
+    .then(response => {
+      setTodo(response.data.todo)
+      // what our backend returns
+    })
+  },[])
+
   return <div>
-    <h1>{title}</h1>
-    <h4>{description}</h4>
+    <h1>{todo.title}</h1>
+    <h4>{todo.description}</h4>
   </div>
 }
