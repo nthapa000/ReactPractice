@@ -1,43 +1,23 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-// cleaner syntax to do the fetch call
-
+import {  useState } from "react";
 export default function App(){
-  const [currentId,setCurrentId] = useState(1)
+  const [counter,setCounter]= useState(0);
+  const [inputValue,setInputValue] = useState(1);
+
+  let count =0;
+  for(let i=1; i<= inputValue;i++){
+    count = count + i;
+  }
 
   return <div>
-    <button onClick={function(){
-      setCurrentId(1)
-    }}>1</button>
-    <button onClick={function(){
-      setCurrentId(2)
-    }}>2</button>
-    <button onClick={function(){
-      setCurrentId(3)
-    }}>3</button>
-    <button onClick={function(){
-      setCurrentId(4)
-    }}>4</button>
-
-    <Todo id={currentId}/>
-  </div>
-}
-
-function Todo({id}){
-  
-  const [todo,setTodo] = useState({});
-
-  useEffect(()=>{
-    axios.get("https://sum-server.100xdevs.com/todo?id=" + id)
-    .then(response => {
-      setTodo(response.data.todo)
-      // what our backend returns
-    })
-  },[id])
-
-  return <div>
-    Id:{id}
-    <h1>{todo.title}</h1>
-    <h4>{todo.description}</h4>
+    <input onChange={function(e){
+      setInputValue(e.target.value);
+    }} placeholder="Find sum from 1 to n" />
+    
+    <br />
+    Sum from 1 to {inputValue} is {count}
+    <br />
+    <button onClick={()=>{
+      setCounter(counter+1);
+    }}>Counter {(counter)}</button>
   </div>
 }
